@@ -66,11 +66,17 @@ CREATE TABLE funcion(
 
 CREATE TABLE tarea_asignada(
     id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    terminada NUMBER(1) NOT NULL,
     id_tarea NUMBER  NOT NULL,
     id_usuario NUMBER NOT NULL,
     id_funcion NUMBER NOT NULL,
     CONSTRAINT fk_tareaasignada_tarea FOREIGN KEY (id_tarea) REFERENCES tarea(id),
     CONSTRAINT fk_tareaasignada_usuario FOREIGN KEY (id_usuario) REFERENCES usuario(id),
     CONSTRAINT fk_tareaasignada_funcion FOREIGN KEY (id_funcion) REFERENCES funcion(id)
+);
+
+CREATE TABLE indicacion_tarea(
+    id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    descripcion VARCHAR2(200) NOT NULL,
+    id_tarea_asignada NUMBER NOT NULL,
+    CONSTRAINT fk_indicaciontarea_tareaasignada FOREIGN KEY (id_tarea_asignada) REFERENCES tarea_asignada(id)
 );
