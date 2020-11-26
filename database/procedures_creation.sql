@@ -21,6 +21,7 @@ END;
 
 CREATE OR REPLACE PROCEDURE sp_crear_editar_usuario(
     v_id NUMBER,
+    v_rut STRING,
     v_username STRING,
     v_password STRING,
     v_nombre STRING,
@@ -35,11 +36,12 @@ CREATE OR REPLACE PROCEDURE sp_crear_editar_usuario(
 IS
 BEGIN
     IF v_id = -1 THEN
-        INSERT INTO usuario (username, password, nombre, apellido, email, telefono,direccion,region, activo, id_rol_usuario)
-        VALUES (v_username, v_password,v_nombre,v_apellido,v_email,v_telefono,v_direccion,v_region, v_activo , v_id_rol_usuario);
+        INSERT INTO usuario (rut, username, password, nombre, apellido, email, telefono,direccion,region, activo, id_rol_usuario)
+        VALUES (v_rut, v_username, v_password,v_nombre,v_apellido,v_email,v_telefono,v_direccion,v_region, v_activo , v_id_rol_usuario);
     ELSE
         UPDATE usuario
         SET 
+            rut = v_rut,
             username = v_username,
             password = v_password,
             nombre = v_nombre, 
@@ -59,6 +61,7 @@ END;
 CREATE OR REPLACE PROCEDURE sp_crear_editar_empresa(
     v_id NUMBER,
     v_rut STRING,
+    v_nombre STRING,
     v_telefono NUMBER,
     v_email STRING,
     v_direccion STRING,
@@ -68,12 +71,12 @@ IS
 BEGIN
     IF v_id = -1 THEN
         INSERT INTO empresa (rut, nombre, telefono, email, direccion, region)
-        VALUES (v_id, v_rut, v_telefono, v_email, v_direccion, v_region);
+        VALUES (v_rut, v_nombre, v_telefono, v_email, v_direccion, v_region);
     ELSE
         UPDATE empresa
         SET 
             rut = v_rut, 
-            nombre = v_telefono, 
+            nombre = v_nombre, 
             telefono = v_telefono, 
             email = v_email, 
             direccion = v_direccion, 
@@ -84,7 +87,7 @@ BEGIN
     COMMIT;
 END;
 
-CREATE OR REPLACE PROCEDURE sp_crear_editar_usuario(
+CREATE OR REPLACE PROCEDURE sp_crear_editar_tarea(
     v_id NUMBER,
     v_nombre STRING,
     v_descripcion STRING
@@ -131,7 +134,7 @@ END;
 CREATE OR REPLACE PROCEDURE sp_crear_editar_funcion(
     v_id NUMBER,
     v_nombre STRING,
-    v_descripcion NUMBER,
+    v_descripcion STRING,
     v_fecha_inicio DATE,
     v_fecha_termino DATE,
     v_id_unidad NUMBER

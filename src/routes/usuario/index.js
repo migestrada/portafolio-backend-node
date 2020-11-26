@@ -13,7 +13,7 @@ router.get('/usuarios/:id', (req, res) => {
     console.log('HEADERS',req.headers)
 })
 
-router.get('/usuarios', (req, res) => {
+router.get('/usuarios',(req, res) => {
     const query = 'select * from usuario'
     getConnection({
         req,
@@ -24,8 +24,8 @@ router.get('/usuarios', (req, res) => {
 
 
 router.post('/usuarios', (req, res) => {
-    const { username, password, nombre, apellido, email, telefono, direccion, region, activo, id_rol_usuario } = req.body
-    const query = `CALL sp_crear_editar_usuario (-1,'${username}', '${password}', '${nombre}', '${apellido}', '${email}', ${telefono}, '${direccion}', '${region}', ${activo},${id_rol_usuario})`;
+    const { rut, username, password, nombre, apellido, email, telefono, direccion, region, activo, id_rol_usuario } = req.body
+    const query = `CALL sp_crear_editar_usuario (-1,'${rut}', '${username}', '${password}', '${nombre}', '${apellido}', '${email}', ${telefono}, '${direccion}', '${region}', ${activo},${id_rol_usuario})`;
     getConnection({
         req,
         res,
@@ -35,8 +35,8 @@ router.post('/usuarios', (req, res) => {
 
 router.put('/usuarios/:id', (req, res) => {
     const { id } = req.params
-    const { username, password, nombre, apellido, email, telefono, direccion, region, activo, id_rol_usuario } = req.body
-    const query = `CALL sp_crear_editar_usuario (${id},'${username}', '${password}', '${nombre}', '${apellido}', '${email}', ${telefono}, '${direccion}', '${region}', ${activo},${id_rol_usuario})`;
+    const { rut, username, password, nombre, apellido, email, telefono, direccion, region, activo, id_rol_usuario } = req.body
+    const query = `CALL sp_crear_editar_usuario (${id},'${rut}', '${username}', '${password}', '${nombre}', '${apellido}', '${email}', ${telefono}, '${direccion}', '${region}', ${activo},${id_rol_usuario})`;
     getConnection({
         req,
         res,
