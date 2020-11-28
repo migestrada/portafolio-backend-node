@@ -183,3 +183,24 @@ BEGIN
     COMMIT;
 END;
 
+CREATE OR REPLACE PROCEDURE sp_crear_editar_permiso_rol_usuario(
+    v_id NUMBER,
+    v_nombre STRING,
+    v_id_rol_usuario STRING
+)
+IS
+BEGIN
+    IF v_id = -1 THEN
+        INSERT INTO permiso_rol_usuario (nombre, id_rol_usuario)
+        VALUES (v_nombre, v_id_rol_usuario);
+    ELSE
+        UPDATE permiso_rol_usuario
+        SET 
+            nombre = v_nombre,
+            id_rol_usuario = id_rol_usuario
+        WHERE id = v_id;
+    END IF;
+    
+    COMMIT;
+END;
+

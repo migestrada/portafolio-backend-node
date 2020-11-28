@@ -21,6 +21,7 @@ app.use(require('./routes/unidad/index'));
 app.use(require('./routes/funcion/index'));
 app.use(require('./routes/tarea_asignada/index'));
 app.use(require('./routes/login/index'));
+app.use(require('./routes/permiso_rol_usuario/index'));
 
 //Run server
 app.listen(app.get('port'), () => {

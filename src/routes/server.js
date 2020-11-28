@@ -6,8 +6,8 @@ const { verifyToken } = require('./middleware')
 async function getConnection(params) {
     const { req, res, query, view } = params
     
-    if (view != 'login'){
-        await verifyToken (req, res, view);
+    if ( view != 'login' && !await verifyToken (req, res, view)){
+        return res.sendStatus(403);
     }
     
     let connection;

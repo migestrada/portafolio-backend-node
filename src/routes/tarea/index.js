@@ -2,12 +2,15 @@ const { Router } = require('express');
 const router = Router();
 const { getConnection } = require('../server')
 
+const view ='tarea';
+
 router.get('/tareas', (req, res) => {
     const query = 'SELECT * FROM tarea'
     getConnection({
         req,
         res,
-        query
+        query,
+        view
     })
 })
 
@@ -17,7 +20,8 @@ router.get('/tareas/:id', (req, res) => {
     getConnection({
         req,
         res,
-        query
+        query,
+        view
     })
 })
 
@@ -27,7 +31,8 @@ router.post('/tareas', (req, res) => {
     getConnection({
         req,
         res,
-        query
+        query,
+        view
     })
 })
 
@@ -38,7 +43,8 @@ router.put('/tareas/:id', (req, res) => {
     getConnection({
         req,
         res,
-        query
+        query,
+        view
     })
 })
 

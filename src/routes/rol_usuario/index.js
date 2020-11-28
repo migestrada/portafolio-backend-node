@@ -2,12 +2,15 @@ const { Router } = require('express');
 const router = Router();
 const { getConnection } = require('../server')
 
+const view = 'rol_usuario';
+
 router.get('/roles', (req, res) => {
     const query = 'SELECT * FROM rol_usuario'
     getConnection({
         req,
         res,
-        query
+        query,
+        view
     })
 })
 
@@ -17,7 +20,8 @@ router.get('/roles/:id', (req, res) => {
     getConnection({
         req,
         res,
-        query
+        query,
+        view
     })
 })
 
@@ -27,7 +31,8 @@ router.post('/roles', (req, res) => {
     getConnection({
         req,
         res,
-        query
+        query,
+        view
     })
 })
 
@@ -38,7 +43,8 @@ router.put('/roles/:id', (req, res) => {
     getConnection({
         req,
         res,
-        query
+        query,
+        view
     })
 })
 

@@ -2,14 +2,17 @@ const { Router } = require('express');
 const router = Router();
 const { getConnection } = require('../server')
 
+const view = 'empresa';
+
 router.get('/empresas/:id', (req, res) => {
-    const { id } = req.params
-    const query = `select * from empresa where id = ${id}`
+    const { id } = req.params;
+    const query = `select * from empresa where id = ${id}`;
     getConnection({
         req,
         res,
-        query
-    })
+        query,
+        view
+    });
 })
 
 router.get('/empresas', (req, res) => {
@@ -17,7 +20,8 @@ router.get('/empresas', (req, res) => {
     getConnection({
         req,
         res,
-        query
+        query,
+        view
     })
 })
 
@@ -28,7 +32,8 @@ router.post('/empresas', (req, res) => {
     getConnection({
         req,
         res,
-        query
+        query,
+        view
     })
 })
 
@@ -39,7 +44,8 @@ router.put('/empresas/:id', (req, res) => {
     getConnection({
         req,
         res,
-        query
+        query,
+        view
     })
 })
 

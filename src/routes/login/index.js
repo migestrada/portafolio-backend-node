@@ -8,6 +8,8 @@ const oracledb = require('oracledb');
 oracledb.outFormat = oracledb.OBJECT;
 oracledb.autoCommit = true;
 
+const view = 'login';
+
 router.post('/login' , async (req, res) => {
     const { username, password } = req.body;
     const query = `SELECT * FROM usuario WHERE username='${username}' AND password='${password}'`;
@@ -16,7 +18,7 @@ router.post('/login' , async (req, res) => {
         req,
         res,
         query,
-        view: 'login'
+        view
     })
 
     if (Object.keys(connectionResponse).length === 1){
@@ -32,11 +34,5 @@ router.post('/login' , async (req, res) => {
         })
     }
 })
-
-router.get('/login' , verifyToken, (req, res) => {
-    
-})
-
-
 
 module.exports = router;

@@ -14,6 +14,13 @@ CREATE TABLE rol_usuario(
     descripcion VARCHAR2(50) NOT NULL
 );
 
+CREATE TABLE permiso_rol_usuario(
+    id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nombre VARCHAR2(9) NOT NULL UNIQUE,
+    id_rol_usuario NUMBER NOT NULL,
+    CONSTRAINT fk_permiso_rolusuario FOREIGN KEY (id_rol_usuario) REFERENCES rol_usuario(id)
+);
+
 CREATE TABLE usuario(
     id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     rut VARCHAR2(9) NOT NULL UNIQUE,

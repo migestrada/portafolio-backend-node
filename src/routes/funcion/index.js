@@ -2,12 +2,14 @@ const { Router } = require('express');
 const router = Router();
 const { getConnection } = require('../server')
 
+const view = 'funcion'
 router.get('/funciones', (req, res) => {
     const query = 'SELECT * FROM funcion'
     getConnection({
         req,
         res,
-        query
+        query,
+        view
     })
 })
 
