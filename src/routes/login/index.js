@@ -43,8 +43,10 @@ router.post('/login' , async (req, res) => {
 router.get('/login' , async (req, res) => {
     try {
         const result = await verifyToken(req, res);
+        const query = `SELECT * FROM permiso_rol_usuario WHERE id_rol_usuario = ${Object.values(result)[0]["ID"]}`
+        const resultado = await getConnection({req, res, query, view})
 
-        res.json({...result});
+        res.json({...resultado});
 
     } catch (error) {
         res.sendStatus(400)
