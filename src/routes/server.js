@@ -6,15 +6,17 @@ const { verifyToken, checkPerm } = require('./middleware')
 async function getConnection(params) {
     const { req, res, query, view } = params;
 
-    try {
-        const role = await verifyToken (req, res, view);
-        const token = await checkPerm(req, res, view, {...role});
-        console.log(token)
-        if ( view != 'login' && !token ){
-            return res.sendStatus(403);
+    if (view != 'login'){
+        try {
+            const role = await verifyToken (req, res, view);
+            const token = await checkPerm(req, res, view, {...role});
+            console.log(token)
+            if (!token ){
+                return res.sendStatus(403);
+            }
+        } catch (error) {
+            console.log('AAAAAAAAAAAA')
         }
-    } catch (error) {
-        console.log('ERROR')
     }
 
     

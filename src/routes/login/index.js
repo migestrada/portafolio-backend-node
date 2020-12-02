@@ -12,27 +12,31 @@ oracledb.autoCommit = true;
 const view = 'login';
 
 router.post('/login' , async (req, res) => {
-    const { username, password } = req.body;
-    const query = `SELECT * FROM usuario WHERE username='${username}' AND password='${password}'`;
-    
-    const connectionResponse = await getConnection({
-        req,
-        res,
-        query,
-        view
-    })
+    try {
+        const { username, password } = req.body;
+        const query = `SELECT * FROM usuario WHERE username='${username}' AND password='${password}'`;
+        
+        const connectionResponse = await getConnection({
+            req,
+            res,
+            query,
+            view
+        })
 
-    if (Object.keys(connectionResponse).length === 1){
-        jwt.sign({ username, password }, process.env.LOGIN_SECRET_KEY, (err, token) => {
-            res.json({
-                token
+        if (Object.keys(connectionResponse).length === 1){
+            jwt.sign({ username, password }, process.env.LOGIN_SECRET_KEY, (err, token) => {
+                res.json({
+                    token
+                })
             })
-        })
-    }else{
-        res.statusCode = 401
-        res.json({
-            message: 'Usuario y/o Contraseña incorrectos'
-        })
+        }else{
+            res.statusCode = 401
+            res.json({
+                message: 'Usuario y/o Contraseña incorrectos'
+            })
+        }
+    } catch (error) {
+        console.log('ERROR EN LOGIN INDEX')
     }
 })
 
