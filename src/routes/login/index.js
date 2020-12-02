@@ -1,8 +1,9 @@
 const { Router } = require('express');
 const router = Router();
 const jwt  = require('jsonwebtoken');
-const { verifyToken } = require('../middleware')
 const { getConnection } = require('../server')
+const { verifyToken } = require('../middleware')
+
 // ORACLE DB
 const oracledb = require('oracledb');
 oracledb.outFormat = oracledb.OBJECT;
@@ -32,6 +33,17 @@ router.post('/login' , async (req, res) => {
         res.json({
             message: 'Usuario y/o Contraseña incorrectos'
         })
+    }
+})
+
+router.get('/login' , async (req, res) => {
+    try {
+        const result = await verifyToken(req, res);
+
+        res.json({...result});
+
+    } catch (error) {
+        res.sendStatus(400)
     }
 })
 

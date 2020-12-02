@@ -1,14 +1,23 @@
 const oracledb = require('oracledb');
 oracledb.autoCommit = true;
 oracledb.outFormat = oracledb.OBJECT;
-const { verifyToken } = require('./middleware')
+const { verifyToken, checkPerm } = require('./middleware')
 
 async function getConnection(params) {
-    const { req, res, query, view } = params
-    
-    if ( view != 'login' && !await verifyToken (req, res, view)){
-        return res.sendStatus(403);
+    const { req, res, query, view } = params;
+
+    try {
+        const role = await verifyToken (req, res, view);
+        const token = await checkPerm(req, res, view, {...role});
+        console.log(token)
+        if ( view != 'login' && !token ){
+            return res.sendStatus(403);
+        }
+    } catch (error) {
+        console.log('ERROR')
     }
+
+    
     
     let connection;
     try {

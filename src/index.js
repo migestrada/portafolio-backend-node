@@ -1,13 +1,21 @@
 const express = require('express');
 const app = express();
-const morgan = require('morgan')
-const oracledb = require('oracledb')
+const morgan = require('morgan');
+const oracledb = require('oracledb');
+const cors = require('cors');
+
 require('dotenv').config()
 
 //settings
 app.set('port', process.env.PORT)
 
 //Middleware
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());

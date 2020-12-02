@@ -3,16 +3,16 @@ const oracledb = require('oracledb');
 oracledb.autoCommit = true;
 oracledb.outFormat = oracledb.OBJECT;
 
-async function verifyToken(req, res, view) {
+async function verifyToken(req, res) {
     const authorization = req.get('Authorization');
-    let havePerm = false;
+    let user = false;
     if (authorization){
         await jwt.verify(authorization, process.env.LOGIN_SECRET_KEY, async (err, userData) => {
             if (err){
                 res.sendStatus(403);
             }else{
                 const { username, password } = userData
-                const query = `SELECT rol_usuario.id FROM rol_usuario, usuario 
+                const query = `SELECT rol_usuario.id, rol_usuario.nombre as rol FROM rol_usuario, usuario 
                 where usuario.username='${username}' 
                 AND usuario.password='${password}' 
                 AND rol_usuario.id = usuario.id_rol_usuario`;
@@ -38,7 +38,7 @@ async function verifyToken(req, res, view) {
                         }
                     }
                     
-                    havePerm = await checkPerm(req, res, view, {...result.rows});
+                    user = result.rows;
                 }
             
             }
@@ -47,7 +47,7 @@ async function verifyToken(req, res, view) {
         res.sendStatus(403);
     }
 
-    return havePerm;
+    return user;
 }
 
 
@@ -103,5 +103,6 @@ async function checkPerm(req, res, view, role){
     
 }
 module.exports = {
-    verifyToken
+    verifyToken,
+    checkPerm
 }
